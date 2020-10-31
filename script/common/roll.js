@@ -14,7 +14,6 @@ export async function combatRoll(rollData) {
 }
 
 async function _sendToChat(rollData) {
-    console.log(rollData)
     const html = await renderTemplate("systems/dark-heresy/template/chat/roll.html", rollData);
     let chatData = {
         user: game.user._id,
@@ -59,6 +58,7 @@ function _rollDamage(rollData) {
             }
         }
     });
+    rollData.location = _getLocation(rollData.result);
     rollData.damage = total;
 }
 
@@ -73,6 +73,25 @@ function _rollRighteousFury() {
     let r = new Roll("1d5", {});
     r.evaluate();
     return r.total;
+}
+
+function _getLocation(result) {
+    const locationTarget = parseFloat(result.toString().split('').reverse().join('')) * Math.sign(result);
+    if (locationTarget <= 10) {
+        return "ARMOUR.HEAD";
+    } else if (locationTarget >= 11 && locationTarget <= 20) {
+        return "ARMOUR.RIGHT_ARM";
+    } else if (locationTarget >= 21 && locationTarget <= 30) {
+        return "ARMOUR.LEFT_ARM";
+    } else if (locationTarget >= 31 && locationTarget <= 70) {
+        return "ARMOUR.BODY";
+    } else if (locationTarget >= 71 && locationTarget <= 85) {
+        return "ARMOUR.RIGHT_LEG";
+    } else if (locationTarget >= 86 && locationTarget <= 100) {
+        return "ARMOUR.LEFT_LEG";
+    } else {
+        return "ARMOUR.BODY";
+    }
 }
 
 function _getDegree(a, b) {
