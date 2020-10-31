@@ -8,8 +8,8 @@ It provides support for **character sheets only**, game content should be drawn 
 3. Create a Game World using the Dark Heresy system.
 
 ## Preview
-![Acolyte 1](https://github.com/Perfectro/dark-heresy-foundry-vtt/blob/master/asset/preview/acolyte1.png?raw=true)  
-![Acolyte 2](https://github.com/Perfectro/dark-heresy-foundry-vtt/blob/master/asset/preview/acolyte2.png?raw=true)  
+![Acolyte 1](https://github.com/Perfectro/dark-heresy-foundry-vtt/blob/master/asset/preview/acolyte1.jpg?raw=true)  
+![Acolyte 2](https://github.com/Perfectro/dark-heresy-foundry-vtt/blob/master/asset/preview/acolyte2.jpg?raw=true)  
 
 ## Related Website
 - https://foundryvtt.com/
