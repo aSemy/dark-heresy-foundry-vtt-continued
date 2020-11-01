@@ -1,5 +1,5 @@
-# Dark Heresy
-An **UNOFFICIAL** system for playing Dark Heresy on Foundry VTT.  
+# Dark Heresy 2E
+An **UNOFFICIAL** system for playing Dark Heresy 2E on Foundry VTT.
 It provides support for **character sheets only**, game content should be drawn from official source books.
 
 ## Install
