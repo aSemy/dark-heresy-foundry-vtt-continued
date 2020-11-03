@@ -546,7 +546,7 @@
           "psyniscience": {
             "label": "SKILL.PSYNISCIENCE",
             "characteristics": [
-              "PER",
+              "Per",
               "WP"
             ],
             "advance": -20,

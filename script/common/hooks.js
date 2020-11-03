@@ -20,6 +20,7 @@ import { TalentSheet } from "../sheet/talent.js";
 import { SpecialAbilitySheet } from "../sheet/special-ability.js";
 import { TraitSheet } from "../sheet/trait.js";
 import { initializeHandlebars } from "./handlebars.js";
+import { migrateWorld } from "./migration.js";
 
 Hooks.once("init", () => {
     CONFIG.Combat.initiative = { formula: "@initiative.base + @initiative.bonus", decimals: 0 };
@@ -48,6 +49,18 @@ Hooks.once("init", () => {
     Items.registerSheet("dark-heresy", SpecialAbilitySheet, { types: ["specialAbility"], makeDefault: true });
     Items.registerSheet("dark-heresy", TraitSheet, { types: ["trait"], makeDefault: true });
     initializeHandlebars();
+    game.settings.register("dark-heresy", "worldSchemaVersion", {
+        name: "World Version",
+        hint: "Used to automatically upgrade worlds data when the system is upgraded.",
+        scope: "world",
+        config: true,
+        default: 0,
+        type: Number,
+    });
+});
+
+Hooks.once("ready", () => {
+    migrateWorld();
 });
 
 Hooks.on("preCreateActor", (createData) => {
