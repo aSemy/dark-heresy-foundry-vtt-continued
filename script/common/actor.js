@@ -64,10 +64,7 @@ export class DarkHeresyActor extends Actor {
                 encumbrance = encumbrance + item.data.weight;
             }
         }
-        data.data.encumbrance = {
-            max: data.data.characteristics.strength.bonus + data.data.characteristics.toughness.bonus,
-            value: encumbrance
-        };
+        this._computeEncumbrance(data, encumbrance);
     }
 
     _computeExperience(data) {
@@ -142,6 +139,12 @@ export class DarkHeresyActor extends Actor {
                 data.data.armour.rightLeg.value += item.data.part.rightLeg;
             }
         }
+        data.data.armour.head.total += data.data.armour.head.value;
+        data.data.armour.leftArm.total += data.data.armour.leftArm.value;
+        data.data.armour.rightArm.total += data.data.armour.rightArm.value;
+        data.data.armour.body.total += data.data.armour.body.value;
+        data.data.armour.leftLeg.total += data.data.armour.leftLeg.value;
+        data.data.armour.rightLeg.total += data.data.armour.rightLeg.value;
     }
 
     _computeMovement(data) {
@@ -161,5 +164,81 @@ export class DarkHeresyActor extends Actor {
             }
         }
         return {total: 0};
+    }
+
+    _computeEncumbrance(data, encumbrance) {
+        const attributeBonus = data.data.characteristics.strength.bonus + data.data.characteristics.toughness.bonus;
+        data.data.encumbrance = {
+            max: 0,
+            value: encumbrance
+        };
+        switch (attributeBonus) {
+            case 0:
+                data.data.encumbrance.max = 0.9;
+                break
+            case 1:
+                data.data.encumbrance.max = 2.25;
+                break
+            case 2:
+                data.data.encumbrance.max = 4.5;
+                break
+            case 3:
+                data.data.encumbrance.max = 9;
+                break
+            case 4:
+                data.data.encumbrance.max = 18;
+                break
+            case 5:
+                data.data.encumbrance.max = 27;
+                break
+            case 6:
+                data.data.encumbrance.max = 36;
+                break
+            case 7:
+                data.data.encumbrance.max = 45;
+                break
+            case 8:
+                data.data.encumbrance.max = 56;
+                break
+            case 9:
+                data.data.encumbrance.max = 67;
+                break
+            case 10:
+                data.data.encumbrance.max = 78;
+                break
+            case 11:
+                data.data.encumbrance.max = 90;
+                break
+            case 12:
+                data.data.encumbrance.max = 112;
+                break
+            case 13:
+                data.data.encumbrance.max = 225;
+                break
+            case 14:
+                data.data.encumbrance.max = 337;
+                break
+            case 15:
+                data.data.encumbrance.max = 450;
+                break
+            case 16:
+                data.data.encumbrance.max = 675;
+                break
+            case 17:
+                data.data.encumbrance.max = 900;
+                break
+            case 18:
+                data.data.encumbrance.max = 1350;
+                break
+            case 19:
+                data.data.encumbrance.max = 1800;
+                break
+            case 20:
+                data.data.encumbrance.max = 2250;
+                break
+            default:
+                data.data.encumbrance.max = 2250;
+                break
+        }
     }
 }
