@@ -12,8 +12,7 @@ export async function prepareCommonRoll(rollData) {
                 callback: async (html) => {
                     rollData.name = game.i18n.localize(rollData.name);
                     rollData.baseTarget = parseInt(html.find("#target")[0].value, 10);
-                    rollData.modifier = parseInt(html.find("#modifier")[0].value, 10);
-                    rollData.target = rollData.baseTarget + rollData.modifier;
+                    rollData.modifier = html.find("#modifier")[0].value;
                     await commonRoll(rollData);
                 },
             },
@@ -43,12 +42,16 @@ export async function prepareCombatRoll(rollData) {
                 callback: async (html) => {
                     rollData.name = game.i18n.localize(rollData.name);
                     rollData.baseTarget = parseInt(html.find("#target")[0].value, 10);
-                    rollData.modifier = parseInt(html.find("#modifier")[0].value, 10);
+                    rollData.modifier = html.find("#modifier")[0].value;
+                    const range = html.find("#range")[0];
+                    if (typeof range !== "undefined" && range !== null) {
+                        rollData.range = range.value;
+                    }
+                    rollData.attackType = html.find("#attackType")[0].value;
                     rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, psy);
                     rollData.damageType = html.find("#damageType")[0].value;
                     rollData.damageBonus = parseInt(html.find("#damageBonus")[0].value, 10);
                     rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, psy);
-                    rollData.target = rollData.baseTarget + rollData.modifier;
                     await combatRoll(rollData);
                 },
             },
@@ -77,13 +80,12 @@ export async function preparePsychicPowerRoll(rollData) {
                 callback: async (html) => {
                     rollData.name = game.i18n.localize(rollData.name);
                     rollData.baseTarget = parseInt(html.find("#target")[0].value, 10);
-                    rollData.modifier = parseInt(html.find("#modifier")[0].value, 10);
+                    rollData.modifier = html.find("#modifier")[0].value;
                     rollData.psy = parseInt(html.find("#psy")[0].value, 10);
                     rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, rollData.psy);
                     rollData.damageType = html.find("#damageType")[0].value;
                     rollData.damageBonus = parseInt(html.find("#damageBonus")[0].value, 10);
                     rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, rollData.psy);
-                    rollData.target = rollData.baseTarget + rollData.modifier;
                     await combatRoll(rollData);
                 },
             },

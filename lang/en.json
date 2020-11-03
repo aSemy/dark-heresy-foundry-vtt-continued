@@ -45,6 +45,14 @@
   "ARMOUR_TYPE.CARAPACE": "Carapace",
   "ARMOUR_TYPE.POWER": "Power",
 
+  "ATTACK_TYPE.NONE": "None",
+  "ATTACK_TYPE.STANDARD": "Standard",
+  "ATTACK_TYPE.SWIFT": "Swift",
+  "ATTACK_TYPE.SEMI_AUTO": "Semi Auto",
+  "ATTACK_TYPE.LIGHTNING": "Lightning",
+  "ATTACK_TYPE.FULL_AUTO": "Full Auto",
+  "ATTACK_TYPE.CALLED_SHOT": "Called Shot",
+
   "AVAILABILITY.UBIQUITOUS": "Ubiquitous",
   "AVAILABILITY.ABUNDANT": "Abundant",
   "AVAILABILITY.PLENTIFUL": "Plentiful",
@@ -149,6 +157,8 @@
   "DIALOG.TYPE": "Type",
   "DIALOG.PENETRATION": "Penetration",
   "DIALOG.PSY_RATING": "Psy Rating",
+  "DIALOG.RANGE": "Range",
+  "DIALOG.ATTACK_TYPE": "Attack Type",
 
   "DRUG.HEADER": "Drug",
   "DRUG.NAME": "Name",
@@ -231,6 +241,12 @@
   "PSYCHIC_POWER.BOUND": "Bound",
   "PSYCHIC_POWER.UNBOUND": "Unbound",
   "PSYCHIC_POWER.DAEMONIC": "Daemonic",
+
+  "RANGE.NONE": "None",
+  "RANGE.POINT_BLANK": "Point Blank",
+  "RANGE.SHORT": "Short",
+  "RANGE.LONG": "Long",
+  "RANGE.EXTREME": "Extreme",
 
   "SKILL.ACROBATICS": "Acrobatics",
   "SKILL.ATHLETICS": "Athletics",

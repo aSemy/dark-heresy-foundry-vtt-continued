@@ -7,14 +7,54 @@
         </div>
         <div class="wrapper">
             <label>{{localize "DIALOG.MODIFIER"}}</label>
-            <input id="modifier" type="number" value="{{modifier}}" data-dtype="Number"/>
+            <input id="modifier" type="text" value="{{modifier}}"/>
         </div>
+        {{#if isMelee}}
+        <div class="wrapper">
+            <label>{{localize "DIALOG.ATTACK_TYPE"}}</label>
+            <select id="attackType">
+                {{#select attackType}}
+                <option value="0" selected>{{localize "ATTACK_TYPE.NONE"}}</option>
+                <option value="10">{{localize "ATTACK_TYPE.STANDARD"}}</option>
+                <option value="0">{{localize "ATTACK_TYPE.SWIFT"}}</option>
+                <option value="-10">{{localize "ATTACK_TYPE.LIGHTNING"}}</option>
+                <option value="-20">{{localize "ATTACK_TYPE.CALLED_SHOT"}}</option>
+                {{/select}}
+            </select>
+        </div>
+        {{/if}}
+        {{#if isRange}}
+        <div class="wrapper">
+            <label>{{localize "DIALOG.RANGE"}}</label>
+            <select id="range">
+                {{#select range}}
+                <option value="0" selected>{{localize "RANGE.NONE"}}</option>
+                <option value="30">{{localize "RANGE.POINT_BLANK"}}</option>
+                <option value="10">{{localize "RANGE.SHORT"}}</option>
+                <option value="-10">{{localize "RANGE.LONG"}}</option>
+                <option value="-30">{{localize "RANGE.EXTREME"}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="wrapper">
+            <label>{{localize "DIALOG.ATTACK_TYPE"}}</label>
+            <select id="attackType">
+                {{#select attackType}}
+                <option value="0" selected>{{localize "ATTACK_TYPE.NONE"}}</option>
+                <option value="10">{{localize "ATTACK_TYPE.STANDARD"}}</option>
+                <option value="0">{{localize "ATTACK_TYPE.SEMI_AUTO"}}</option>
+                <option value="-10">{{localize "ATTACK_TYPE.FULL_AUTO"}}</option>
+                <option value="-20">{{localize "ATTACK_TYPE.CALLED_SHOT"}}</option>
+                {{/select}}
+            </select>
+        </div>
+        {{/if}}
         <div class="separator"></div>
-        <div class="wrapper damage">
+        <div class="wrapper">
             <label>{{localize "DIALOG.DAMAGE"}}</label>
             <input id="damageFormula" type="text" value="{{damageFormula}}"/>
         </div>
-        <div class="wrapper damage">
+        <div class="wrapper">
             <label>{{localize "DIALOG.TYPE"}}</label>
             <select id="damageType">
                 {{#select damageType}}

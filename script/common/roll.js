@@ -1,9 +1,11 @@
 export async function commonRoll(rollData) {
+    _computeTarget(rollData);
     _rollTarget(rollData);
     await _sendToChat(rollData);
 }
 
 export async function combatRoll(rollData) {
+    _computeTarget(rollData);
     _rollTarget(rollData);
     if (rollData.isSuccess) {
         rollData.hasDamage = true;
@@ -26,6 +28,21 @@ async function _sendToChat(rollData) {
         chatData.whisper = [game.user];
     }
     ChatMessage.create(chatData);
+}
+
+function _computeTarget(rollData) {
+    const range = (rollData.range) ? rollData.range : "0";
+    const attackType = (rollData.attackType) ? rollData.attackType : "0";
+    const formula = `${rollData.modifier} + ${range} + ${attackType}`;
+    let r = new Roll(formula, {});
+    r.evaluate();
+    if (r.total > 60) {
+        rollData.target = rollData.baseTarget + 60;
+    } else if (r.total < -60) {
+        rollData.target = rollData.baseTarget + -60;
+    } else {
+        rollData.target = rollData.baseTarget + r.total;
+    }
 }
 
 function _rollTarget(rollData) {

@@ -135,6 +135,8 @@ export class DarkHeresySheet extends ActorSheet {
       name: weapon.name,
       baseTarget: characteristic.total + weapon.data.data.attack,
       modifier: 0,
+      isMelee: weapon.data.data.class === "melee",
+      isRange: !(weapon.data.data.class === "melee"),
       damageFormula: weapon.data.data.damage,
       damageBonus: (weapon.data.data.class === "melee") ? this.actor.data.data.characteristics.strength.bonus : 0,
       damageType: weapon.data.data.damageType,
