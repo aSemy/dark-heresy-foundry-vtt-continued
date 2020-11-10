@@ -58,25 +58,27 @@ function _rollDamage(rollData) {
     if (rollData.damageFormula) formula = `${rollData.damageFormula} + ${rollData.damageBonus}`;
     let penetration = _rollPenetration(rollData);
     let firstHit = _computeDamage(formula, rollData.dos, penetration);
-    const firstLocation = _getLocation(rollData.result);
-    firstHit.location = firstLocation;
-    rollData.damages.push(firstHit);
-    if (rollData.attackType.hitMargin > 0) {
-        let maxAdditionalHit = Math.floor((rollData.dos - 1) / rollData.attackType.hitMargin);
-        if (typeof rollData.maxAdditionalHit !== "undefined" && maxAdditionalHit > rollData.maxAdditionalHit) {
-            maxAdditionalHit = rollData.maxAdditionalHit;
+    if (firstHit.total !== 0) {
+        const firstLocation = _getLocation(rollData.result);
+        firstHit.location = firstLocation;
+        rollData.damages.push(firstHit);
+        if (rollData.attackType.hitMargin > 0) {
+            let maxAdditionalHit = Math.floor((rollData.dos - 1) / rollData.attackType.hitMargin);
+            if (typeof rollData.maxAdditionalHit !== "undefined" && maxAdditionalHit > rollData.maxAdditionalHit) {
+                maxAdditionalHit = rollData.maxAdditionalHit;
+            }
+            rollData.numberOfHit = maxAdditionalHit + 1;
+            for (let i = 0; i < maxAdditionalHit; i++) {
+                let additionalHit = _computeDamage(formula, rollData.dos, penetration);
+                additionalHit.location = _getAdditionalLocation(firstLocation, i);
+                rollData.damages.push(additionalHit);
+            }
+        } else {
+            rollData.numberOfHit = 1;
         }
-        rollData.numberOfHit = maxAdditionalHit + 1;
-        for (let i = 0; i < maxAdditionalHit; i++) {
-            let additionalHit = _computeDamage(formula, rollData.dos, penetration);
-            additionalHit.location = _getAdditionalLocation(firstLocation, i);
-            rollData.damages.push(additionalHit);
-        }
-    } else {
-        rollData.numberOfHit = 1;
+        let minDamage = rollData.damages.reduce((min, damage) => min.minDice < damage.minDice ? min : damage, rollData.damages[0]);
+        minDamage.total += (rollData.dos - minDamage.minDice);
     }
-    let minDamage = rollData.damages.reduce((min, damage) => min.minDice < damage.minDice ? min : damage, rollData.damages[0]);
-    minDamage.total += (rollData.dos - minDamage.minDice);
 }
 
 function _computeDamage(formula, dos, penetration) {
@@ -86,6 +88,7 @@ function _computeDamage(formula, dos, penetration) {
         total: r.total,
         righteousFury: 0,
         penetration: penetration,
+        minDice: r.total,
         dices: []
     };
     r.terms.forEach((term) => {
