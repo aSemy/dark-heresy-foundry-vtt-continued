@@ -30,7 +30,6 @@ export async function prepareCommonRoll(rollData) {
 
 export async function prepareCombatRoll(rollData) {
     let psyRatingRegex = /PR/gi;
-    let psy = (rollData.psy) ? rollData.psy : 0;
     const html = await renderTemplate("systems/dark-heresy/template/dialog/combat-roll.html", rollData);
     let dialog = new Dialog({
         title: rollData.name,
@@ -47,11 +46,12 @@ export async function prepareCombatRoll(rollData) {
                     if (typeof range !== "undefined" && range !== null) {
                         rollData.range = range.value;
                     }
-                    rollData.attackType = html.find("#attackType")[0].value;
-                    rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, psy);
+                    rollData.attackType = { name: "none", modifier: 0};
+                    rollData.attackType.name = html.find("#attackType")[0].value;
+                    rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, rollData.psy.value);
                     rollData.damageType = html.find("#damageType")[0].value;
                     rollData.damageBonus = parseInt(html.find("#damageBonus")[0].value, 10);
-                    rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, psy);
+                    rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, rollData.psy.value);
                     await combatRoll(rollData);
                 },
             },
@@ -81,11 +81,13 @@ export async function preparePsychicPowerRoll(rollData) {
                     rollData.name = game.i18n.localize(rollData.name);
                     rollData.baseTarget = parseInt(html.find("#target")[0].value, 10);
                     rollData.modifier = html.find("#modifier")[0].value;
-                    rollData.psy = parseInt(html.find("#psy")[0].value, 10);
-                    rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, rollData.psy);
+                    rollData.psy.value = parseInt(html.find("#psy")[0].value, 10);
+                    rollData.damageFormula = html.find("#damageFormula")[0].value.replace(psyRatingRegex, rollData.psy.value);
                     rollData.damageType = html.find("#damageType")[0].value;
                     rollData.damageBonus = parseInt(html.find("#damageBonus")[0].value, 10);
-                    rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, rollData.psy);
+                    rollData.penetrationFormula = html.find("#penetration")[0].value.replace(psyRatingRegex, rollData.psy.value);
+                    rollData.rateOfFire = { burst: rollData.psy.value, full: rollData.psy.value };
+                    rollData.psy.useModifier = true;
                     await combatRoll(rollData);
                 },
             },

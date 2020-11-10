@@ -131,6 +131,12 @@ export class DarkHeresySheet extends ActorSheet {
     const div = $(event.currentTarget).parents(".item");
     const weapon = this.actor.getOwnedItem(div.data("itemId"));
     let characteristic = this._getWeaponCharacteristic(weapon);
+    let rateOfFire;
+    if (weapon.data.data.class === "melee") {
+      rateOfFire = { burst: characteristic.bonus, full: characteristic.bonus };
+    } else {
+      rateOfFire = { burst: weapon.data.data.rateOfFire.burst, full: weapon.data.data.rateOfFire.full };
+    }
     let rollData = {
       name: weapon.name,
       baseTarget: characteristic.total + weapon.data.data.attack,
@@ -141,9 +147,10 @@ export class DarkHeresySheet extends ActorSheet {
       damageBonus: (weapon.data.data.class === "melee") ? this.actor.data.data.characteristics.strength.bonus : 0,
       damageType: weapon.data.data.damageType,
       penetrationFormula: weapon.data.data.penetration,
-      special: weapon.data.data.special
+      rateOfFire: rateOfFire,
+      special: weapon.data.data.special,
+      psy: { value: this.actor.data.data.psy.rating, display: false },
     };
-    if (this.actor.data.data.psy.rating > 0) rollData.psy = this.actor.data.data.psy.rating;
     await prepareCombatRoll(rollData);
   }
 
@@ -157,10 +164,11 @@ export class DarkHeresySheet extends ActorSheet {
       baseTarget: characteristic.total,
       modifier: psychicPower.data.data.focusPower.difficulty,
       damageFormula: psychicPower.data.data.damage.formula,
-      psy: 1,
+      psy: { value: 1, max: this.actor.data.data.psy.rating, display: true },
       damageType: psychicPower.data.data.damage.type,
       damageBonus: 0,
-      penetrationFormula: psychicPower.data.data.damage.penetration
+      penetrationFormula: psychicPower.data.data.damage.penetration,
+      attackType: { name: psychicPower.data.data.zone }
     };
     await preparePsychicPowerRoll(rollData);
   }

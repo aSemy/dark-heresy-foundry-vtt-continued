@@ -21,12 +21,21 @@ import { SpecialAbilitySheet } from "../sheet/special-ability.js";
 import { TraitSheet } from "../sheet/trait.js";
 import { initializeHandlebars } from "./handlebars.js";
 import { migrateWorld } from "./migration.js";
+import { prepareCommonRoll, prepareCombatRoll, preparePsychicPowerRoll } from "./dialog.js";
+import { commonRoll, combatRoll } from "./roll.js";
 
 Hooks.once("init", () => {
     CONFIG.Combat.initiative = { formula: "@initiative.base + @initiative.bonus", decimals: 0 };
     CONFIG.Actor.entityClass = DarkHeresyActor;
     CONFIG.Item.entityClass = DarkHeresyItem;
     CONFIG.fontFamilies.push("Caslon Antique");
+    game.darkHeresy = {
+        prepareCommonRoll,
+        prepareCombatRoll,
+        preparePsychicPowerRoll,
+        commonRoll,
+        combatRoll
+    };
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("dark-heresy", AcolyteSheet, { types: ["acolyte"], makeDefault: true });
     Actors.registerSheet("dark-heresy", NpcSheet, { types: ["npc"], makeDefault: true });
