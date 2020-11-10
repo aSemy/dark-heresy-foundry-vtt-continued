@@ -102,8 +102,8 @@ function _computeDamage(formula, dos, penetration) {
 }
 
 function _rollPenetration(rollData) {
-    (rollData.penetrationFormula) ? rollData.penetrationFormula : "0";
-    let r = new Roll(rollData.penetrationFormula, {});
+    let penetration = (rollData.penetrationFormula) ? rollData.penetrationFormula : "0";
+    let r = new Roll(penetration, {});
     r.evaluate();
     return r.total;
 }
