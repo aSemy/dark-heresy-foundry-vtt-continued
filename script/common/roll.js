@@ -35,12 +35,14 @@ function _computeTarget(rollData) {
     } else {
         rollData.target = rollData.baseTarget + r.total;
     }
+    rollData.rollObject = r;
 }
 
 function _rollTarget(rollData) {
     let r = new Roll("1d100", {});
     r.evaluate();
     rollData.result = r.total;
+    rollData.rollObject = r;
     rollData.isSuccess = rollData.result <= rollData.target;
     if (rollData.isSuccess) {
         rollData.dof = 0;
@@ -211,7 +213,12 @@ async function _sendToChat(rollData) {
         user: game.user._id,
         rollMode: game.settings.get("core", "rollMode"),
         content: html,
+        type: CHAT_MESSAGE_TYPES.ROLL
     };
+    if(rollData.rollObject){
+        chatData.roll = rollData.rollObject;
+
+    }
     if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
         chatData.whisper = ChatMessage.getWhisperRecipients("GM");
     } else if (chatData.rollMode === "selfroll") {
