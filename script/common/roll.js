@@ -93,9 +93,11 @@ function _computeDamage(formula, dos, penetration) {
     };
     r.terms.forEach((term) => {
         if (typeof term === 'object' && term !== null) {
-            if (term.total === term.faces) damage.righteousFury = _rollRighteousFury(term);
-            if (term.total < dos) damage.dices.push(term.total);
-            if (typeof damage.minDice === "undefined" || term.total < damage.minDice) damage.minDice = term.total;
+            term.results.forEach(result => {
+                if (result.result === term.faces) damage.righteousFury = _rollRighteousFury();
+                if (result.result < dos) damage.dices.push(term.total);
+                if (typeof damage.minDice === "undefined" || result.result < damage.minDice) damage.minDice = result.result;
+            });
         }
     });
     return damage;
