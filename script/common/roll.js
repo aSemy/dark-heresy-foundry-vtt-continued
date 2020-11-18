@@ -79,7 +79,7 @@ function _rollDamage(rollData) {
             rollData.numberOfHit = 1;
         }
         let minDamage = rollData.damages.reduce((min, damage) => min.minDice < damage.minDice ? min : damage, rollData.damages[0]);
-        minDamage.total += (rollData.dos - minDamage.minDice);
+        if (minDamage.minDice < rollData.dos) minDamage.total += (rollData.dos - minDamage.minDice);
     }
 }
 
@@ -90,15 +90,14 @@ function _computeDamage(formula, dos, penetration) {
         total: r.total,
         righteousFury: 0,
         penetration: penetration,
-        minDice: r.total,
         dices: []
     };
     r.terms.forEach((term) => {
         if (typeof term === 'object' && term !== null) {
             term.results.forEach(result => {
-                if (result.result === term.faces) damage.righteousFury = _rollRighteousFury();
-                if (result.result < dos) damage.dices.push(term.total);
-                if (typeof damage.minDice === "undefined" || result.result < damage.minDice) damage.minDice = result.result;
+                if (result.active && result.result === term.faces) damage.righteousFury = _rollRighteousFury();
+                if (result.active && result.result < dos) damage.dices.push(result.result);
+                if (result.active && (typeof damage.minDice === "undefined" || result.result < damage.minDice)) damage.minDice = result.result;
             });
         }
     });

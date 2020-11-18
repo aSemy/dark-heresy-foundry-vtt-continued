@@ -2,9 +2,9 @@
   "name": "dark-heresy",
   "title": "Dark Heresy 2E",
   "description": "Innocence proves nothing",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "minimumCoreVersion": "0.7.5",
-  "compatibleCoreVersion": "0.7.6",
+  "compatibleCoreVersion": "0.7.7",
   "templateVersion": 2,
   "author": "Perfectro",
   "scripts": [],
@@ -67,6 +67,6 @@
   "url": "https://github.com/Perfectro/dark-heresy-foundry-vtt",
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/Perfectro/dark-heresy-foundry-vtt/master/system.json",
-  "download": "https://github.com/Perfectro/dark-heresy-foundry-vtt/archive/v1.10.zip",
+  "download": "https://github.com/Perfectro/dark-heresy-foundry-vtt/archive/v1.11.zip",
   "license": "LICENSE.txt"
 }
