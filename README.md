@@ -1,3 +1,12 @@
+# ARCHIVED 
+
+At present, this project is archived, please instead use this:
+
+https://foundryvtt.com/packages/dark-heresy/
+
+https://github.com/moo-man/DarkHeresy2E-FoundryVTT
+
+
 # Dark Heresy 2E - Continued
 
 An **UNOFFICIAL** system for playing Dark Heresy 2E on [Foundry VTT](https://foundryvtt.com/).
